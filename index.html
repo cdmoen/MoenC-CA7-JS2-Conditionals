@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Author" content="Colin Moen">
     <link rel="stylesheet" type="text/css" href="">
+
     <title>Bear, Ninja, Hunter</title>
 
     <style>
@@ -21,29 +22,64 @@
             align-items: center;
         }
     </style>
-
 </head>
 
 <body style="background-color: black">
     <P id="playerChoice" style="text-align: center; font-size: large; font-family: Impact; color: rgb(43, 255, 0)">
-        player choice prints here</P>
-    <p id="computerChoice" style="text-align: center; font-size: large; font-family: Impact; color: rgb(255, 0, 128)">
-        computer choice prints here</p>
-
+        PLAYER CHOICE PRINTS HERE</P>
+    <p id="computerChoice" style="text-align: center; font-size: large; font-family: Impact; color: rgb(255, 0, 0)">
+        COMPUTER CHOICE PRINTS HERE</p>
+    <p id="result" style="text-align: center; font-size: large; font-family: Impact; color: rgb(132, 0, 255)">
+        GAME RESULTS PRINT HERE</p>
 
     <script>
-        let computerChoice = "Bear";  // HardCodes variable 'computerChoice' to 'Bear'
-        let playerName = prompt('Welcome to Bear Hunter Ninja! Please enter your name to get started: ');  // Gets user input for variable 'playerName'
-        alert(`Hi ${playerName}! Let's Play!`);  // Sends alert "Hi *player's name*! Let's play!"
-        let playerChoice = prompt(`Who are you: Bear, Ninja, or Hunter?`);  // Gets user input for variable playerChoice
-        document.getElementById("playerChoice").innerHTML = `${playerName}, You picked ${playerChoice}!`;  // Prints statement about player's choice to screen
-        console.log(playerName + ", You picked " + playerChoice + " !");  // Prints the same statement to the console
-        document.getElementById("computerChoice").innerHTML = `The computer picked Bear!`;  // Prints HardCoded computer choice to the screen
-        console.log(`The computer picked Bear!`);  // Prints computer choice to the console
+        let computerChoice = "Bear";  // HardCodes 'computerChoice' to 'Bear'
+        let playerName = prompt('Welcome to Bear Hunter Ninja! Please enter your name to get started: ');  // Gets user's name
+        alert(`Hi ${playerName}! Let's Play!`);  // Sends alert to user using their name
+        let playerChoice = prompt(`Who are you: Bear, Ninja, or Hunter?`);  // Gets user input for 'playerChoice'. User picks their character.
 
-        if (playerChoice == "Bear" && computerChoice == "Bear") { alert(`It's a tie!`) };
+        // This if/else block determines who wins and then assigns that result to the variable 'winner'
+        let winner = "";  // Declaring 'winner' outside of the block so that it can be used globally
+        if (playerChoice === "Ninja" && computerChoice === "Hunter") {
+            winner = "player";
+        } else if (playerChoice === "Hunter" && computerChoice === "Bear") {
+            winner = "player";
+        } else if (playerChoice === "Bear" && computerChoice === "Ninja") {
+            winner = "player";
+        } else if (playerChoice === "Ninja" && computerChoice === "Bear") {
+            winner = "computer";
+        } else if (playerChoice === "Hunter" && computerChoice === "Ninja") {
+            winner = "computer";
+        } else if (playerChoice === "Bear" && computerChoice === "Hunter") {
+            winner = "computer";
+        } else {
+            winner = "tie";
+        }   /*  If the previous winner/loser outcomes are not true, we can assume it's a tie.
+            NOTE: This does not account for invalid user input. But I assumed screening for 
+            invalid user input was outside the scope of this assignment, so I didn't do it.*/
 
 
+        // PRINTING RESULTS TO SCREEN AND CONSOLE
+        document.getElementById("playerChoice").innerHTML = `${playerName}, You picked ${playerChoice}!`;  // prints player's choice
+        console.log(playerName + ", You picked " + playerChoice + " !");  // prints player's choice to the console
+        document.getElementById("computerChoice").innerHTML = `The computer picked Bear!`;  // Prints the computer's choice
+        console.log(`The computer picked Bear!`);  // Prints the computer's choice to the console
+
+        // switch block that evaluates the 'winner' variable and prints the results to the page and console
+        switch (winner) {
+            case "player":
+                document.getElementById("result").innerHTML = `You Win!`;
+                console.log(`You Win!`);
+                break;
+            case "computer":
+                document.getElementById("result").innerHTML = `You Lose!`;
+                console.log(`You Lose!`);
+                break;
+            case "tie":
+                document.getElementById("result").innerHTML = `It's a Tie!`;
+                console.log(`It's a Tie!`);
+                break;
+        }
     </script>
 
 
