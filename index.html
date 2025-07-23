@@ -4,13 +4,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name-="Author" content="Colin Moen">
+    <meta name="Author" content="Colin Moen">
+    <link rel="stylesheet" type="text/css" href="">
     <title>Bear, Ninja, Hunter</title>
+
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
 </head>
 
-<body>
+<body style="background-color: black">
+    <P id="playerChoice" style="text-align: center; font-size: large; font-family: Impact; color: rgb(43, 255, 0)">
+        player choice prints here</P>
+    <p id="computerChoice" style="text-align: center; font-size: large; font-family: Impact; color: rgb(255, 0, 128)">
+        computer choice prints here</p>
 
 
+    <script>
+        let computerChoice = "Bear";  // HardCodes variable 'computerChoice' to 'Bear'
+        let playerName = prompt('Welcome to Bear Hunter Ninja! Please enter your name to get started: ');  // Gets user input for variable 'playerName'
+        alert(`Hi ${playerName}! Let's Play!`);  // Sends alert "Hi *player's name*! Let's play!"
+        let playerChoice = prompt(`Who are you: Bear, Ninja, or Hunter?`);  // Gets user input for variable playerChoice
+        document.getElementById("playerChoice").innerHTML = `${playerName}, You picked ${playerChoice}!`;  // Prints statement about player's choice to screen
+        console.log(playerName + ", You picked " + playerChoice + " !");  // Prints the same statement to the console
+        document.getElementById("computerChoice").innerHTML = `The computer picked Bear!`;  // Prints HardCoded computer choice to the screen
+        console.log(`The computer picked Bear!`);  // Prints computer choice to the console
+
+        if (playerChoice == "Bear" && computerChoice == "Bear") { alert(`It's a tie!`) };
+
+
+    </script>
 
 
 </body>
