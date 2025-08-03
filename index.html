@@ -16,69 +16,222 @@
 
         body {
             height: 100%;
+            /* display: flex;
+            flex-direction: column; */
+            /* justify-content: center; */
+            /* align-items: center; */
+        }
+
+        #grid {
+            /* box-sizing: border-box; */
+            width: 100vw;
+            height: 100vh;
+            /* border: 1px solid blue; */
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: 1fr 2fr 1fr;
+            gap: 20px;
+        }
+
+        #column-1 {
+            /* box-sizing: border-box; */
+            /* width: 30%;
+    height: 200px; */
+            /* border: 1px solid blue; */
+            display: flex;
+        }
+
+        #top-row {
+            /* border: 1px solid red; */
+            grid-column: 1/4;
+            grid-row: 1/2;
+            display: flex;
+        }
+
+        #middle-left {
+            /* border: 1px solid red; */
+            grid-column: 1/2;
+            grid-row: 2/3;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            border-radius: 10%;
+        }
+
+        #middle-center {
+            /* border: 1px solid red; */
+            grid-column: 2/3;
+            grid-row: 2/3;
+            display: flex;
+        }
+
+        #middle-right {
+            /* border: 1px solid red; */
+            grid-column: 3/4;
+            grid-row: 2/3;
+            display: flex;
+        }
+
+        #bottom-row {
+            /* border: 1px solid red; */
+            grid-column: 1/4;
+            grid-row: 3/4;
+            display: flex;
         }
     </style>
 </head>
 
 <body style="background-color: black">
-    <P id="playerChoice" style="text-align: center; font-size: large; font-family: Impact; color: rgb(43, 255, 0)">
-        PLAYER CHOICE PRINTS HERE</P>
-    <p id="computerChoice" style="text-align: center; font-size: large; font-family: Impact; color: rgb(255, 0, 0)">
-        COMPUTER CHOICE PRINTS HERE</p>
-    <p id="result" style="text-align: center; font-size: large; font-family: Impact; color: rgb(132, 0, 255)">
-        GAME RESULTS PRINT HERE</p>
+    <div id="grid">
+        <div id="top-row"></div>
+        <div id="middle-left">
+            <pre id="result"
+                style="display: none; text-align: center; font-size: large; font-family: Impact; color: rgb(43, 255, 0)">
+            </pre>
+            <pre id="winner"
+                style="display: none; text-align: center; font-size: large; font-family: Impact; color: rgb(132, 0, 255)">
+            </pre>
+            <pre id="alert"
+                style="display: none; text-align: center; font-size: large; font-family: Impact; color: rgb(255, 0, 0)">
+            </pre>
+        </div>
+        <div id="middle-center"></div>
+        <div id="middle-right"></div>
+        <div id="bottom-row"></div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script type="text/javascript">
-        let computerChoice = "Bear";  // HardCodes 'computerChoice' to 'Bear'
-        let playerName = prompt('Welcome to Bear Hunter Ninja! Please enter your name to get started: ');  // Gets user's name
-        alert(`Hi ${playerName}! Let's Play!`);  // Sends alert to user using their name
-        let playerChoice = prompt(`Who are you: Bear, Ninja, or Hunter?`);  // Gets user input for 'playerChoice'. User picks their character.
 
-        // This if/else block determines who wins and then assigns that result to the variable 'winner'
-        let winner = "";  // Declaring 'winner' outside of the block so that it can be used globally
-        if (playerChoice === "Ninja" && computerChoice === "Hunter") {
-            winner = "player";
-        } else if (playerChoice === "Hunter" && computerChoice === "Bear") {
-            winner = "player";
-        } else if (playerChoice === "Bear" && computerChoice === "Ninja") {
-            winner = "player";
-        } else if (playerChoice === "Ninja" && computerChoice === "Bear") {
-            winner = "computer";
-        } else if (playerChoice === "Hunter" && computerChoice === "Ninja") {
-            winner = "computer";
-        } else if (playerChoice === "Bear" && computerChoice === "Hunter") {
-            winner = "computer";
-        } else {
-            winner = "tie";
-        }   /*  If the previous winner/loser outcomes are not true, we can assume it's a tie.
-            NOTE: This does not account for invalid user input. But I assumed screening for 
-            invalid user input was outside the scope of this assignment, so I didn't do it.*/
+        const results = ["Bear", "Ninja", "Hunter"]
+        const choices = ["bear", "ninja", "hunter"]
 
 
-        // PRINTING RESULTS TO SCREEN AND CONSOLE
-        document.getElementById("playerChoice").innerHTML = `${playerName}, You picked ${playerChoice}!`;  // prints player's choice
-        console.log(playerName + ", You picked " + playerChoice + " !");  // prints player's choice to the console
-        document.getElementById("computerChoice").innerHTML = `The computer picked Bear!`;  // Prints the computer's choice
-        console.log(`The computer picked Bear!`);  // Prints the computer's choice to the console
+        // get player name
+        let playerName = prompt('Welcome to Bear Hunter Ninja! Please enter your name to get started: ');
+        if (playerName === null || playerName === "") {
+            document.getElementById("alert").style.display = "";
+            document.getElementById("alert").innerHTML = "Please press F5 to play again.";
+            throw "Please press F5 to play again.";
+        }
+        else if (!isNaN(playerName)) {
+            document.getElementById("alert").style.display = "";
+            document.getElementById("alert").innerHTML = "Invalid entry\nPlease press F5 to play again.";
+            throw "Invalid entry\nPlease press F5 to play again.";
+        }
+        alert(`Hi ${playerName} Let's Play!`);
 
-        // switch block that evaluates the 'winner' variable and prints the results to the page and console
-        switch (winner) {
-            case "player":
-                document.getElementById("result").innerHTML = `You Win!`;
-                console.log(`You Win!`);
+
+        while (true) {
+            // Set winner to invisible
+            document.getElementById("alert").style.display = "none";
+            document.getElementById("result").style.display = "none";
+            document.getElementById("winner").style.display = "none";
+            // Get computer choice and player Choice
+            let computerChoice = choices[Math.floor(Math.random() * choices.length)];
+            let playerChoice = prompt(`Who are you: Bear, Ninja, or Hunter?`);
+            if (playerChoice === null) {
+                document.getElementById("alert").style.display = "";
+                document.getElementById("alert").innerHTML = "Please press F5 to play again.";
+                console.log("Please press F5 to play again.");
                 break;
-            case "computer":
-                document.getElementById("result").innerHTML = `You Lose!`;
-                console.log(`You Lose!`);
+            }
+            else if (!choices.includes(playerChoice.toLowerCase())) {
+                document.getElementById("alert").style.display = "";
+                document.getElementById("alert").innerHTML = "Invalid Entry\nPlease press F5 to play again.";
+                console.log("Invalid Entry\nPlease press F5 to play again.");
                 break;
-            case "tie":
-                document.getElementById("result").innerHTML = `It's a Tie!`;
-                console.log(`It's a Tie!`);
+            }
+            else {
+                playerChoice = playerChoice.toLowerCase();
+            }
+
+
+            // Determine winner
+            let winner = "";
+            if (playerChoice === "ninja" && computerChoice === "hunter") {
+                winner = "player";
+            } else if (playerChoice === "hunter" && computerChoice === "bear") {
+                winner = "player";
+            } else if (playerChoice === "bear" && computerChoice === "ninja") {
+                winner = "player";
+            } else if (playerChoice === "ninja" && computerChoice === "bear") {
+                winner = "computer";
+            } else if (playerChoice === "hunter" && computerChoice === "ninja") {
+                winner = "computer";
+            } else if (playerChoice === "bear" && computerChoice === "hunter") {
+                winner = "computer";
+            } else {
+                winner = "tie";
+            }
+
+
+            // PRINTING CHOICES TO SCREEN AND CONSOLE
+            playerChoice = results[choices.indexOf(playerChoice)]
+            computerChoice = results[choices.indexOf(computerChoice)]
+            document.getElementById("result").style.display = "";
+            document.getElementById("result").innerHTML = `${playerName} you chose ${playerChoice}!\nThe computer chose ${computerChoice}!`;
+            console.log(playerName + " you chose " + playerChoice + "!");
+            console.log("The computer chose " + computerChoice + "!");
+
+            // PRINTING WINNER
+            switch (winner) {
+                case "player":
+                    document.getElementById("winner").style.display = "";
+                    document.getElementById("winner").innerHTML = `You Win!`;
+                    console.log(`You Win!`);
+                    break;
+                case "computer":
+                    document.getElementById("winner").style.display = "";
+                    document.getElementById("winner").innerHTML = `You Lose!`;
+                    console.log(`You Lose!`);
+                    break;
+                case "tie":
+                    document.getElementById("winner").style.display = "";
+                    document.getElementById("winner").innerHTML = `It's a Tie!`;
+                    console.log(`It's a Tie!`);
+                    break;
+            }
+            // PLAY AGAIN?
+            let playAgain = prompt(`${playerName}, would you like to play again, Yes or No?`);
+            if (playAgain === null || playAgain.toLowerCase() === "no") {
+                document.getElementById("alert").style.display = "";
+                document.getElementById("alert").innerHTML = "Please press F5 to play again.";
+                console.log("Please press F5 to play again.");
                 break;
+            }
+            else if (playAgain.toLowerCase() === "yes") {
+                continue;
+            }
+
+            else {
+                document.getElementById("winner").style.display = "none";
+                document.getElementById("result").style.display = "none";
+                document.getElementById("alert").style.display = "";
+                document.getElementById("alert").innerHTML = "Invalid Entry\nPlease press F5 to play again.";
+                console.log("Invalid Entry\nPlease press F5 to play again.");
+                break;
+                break;
+            }
         }
     </script>
 
